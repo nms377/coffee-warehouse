@@ -8,6 +8,10 @@ Build an API that allows authorized users to maintain coffee inventory, coffee a
 ### The Specs
 ---
 
+|  Columns    | DataType      | Description                                   |
+|-------------|:-------------:|----------------------------------------------:|
+| Coffee Name |  String       | Type of Coffee (i.e. black, latte, cappucino) |
+
 **Coffee**
 
 |	 Columns  	   |		DataType	  |	 Description	 																	  			|
