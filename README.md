@@ -11,11 +11,12 @@ Build an API that allows authorized users to maintain coffee inventory, coffee a
 |  Columns    | DataType      | Description                                   |
 |-------------|:-------------:|----------------------------------------------:|
 | Coffee Name |  String       | Type of Coffee (i.e. black, latte, cappucino) |
+| Item Cost   |  String       | 
 
 **Coffee**
 
 |	 Columns  	   |		DataType	  |	 Description	 																	  			|
-|________________|:______________:|________________________________________________________:|
+|----------------|:--------------:|--------------------------------------------------------:|
 |	 Coffee Name   |		String		  |	 Type of Coffee (i.e. black, latte, cappucino)		 			|
 |	 Item Cost	   |		Integer		  |	 Wholesale cost for coffee													    |
 |  Shipping Cost |	  Integer		  |	 Shipping cost for each item														|
