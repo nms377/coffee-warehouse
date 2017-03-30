@@ -8,11 +8,6 @@ Build an API that allows authorized users to maintain coffee inventory, coffee a
 ### The Specs
 ---
 
-|  Columns    | DataType      | Description                                   |
-|-------------|-------------|----------------------------------------------|
-| Coffee Name | String      | Type of Coffee (i.e. black, latte, cappucino) |
-| Item Cost   | String      | 
-
 **Coffee**
 
 |	 Columns  	   |	DataType  |	Description	 																	  	    |
@@ -27,7 +22,7 @@ Build an API that allows authorized users to maintain coffee inventory, coffee a
 **Orders**
 
 |  Columns			|		DataType	 |	 Description																								|
-|_______________|______________|______________________________________________________________|
+|---------------|--------------|--------------------------------------------------------------|
 |	 Coffee Name	|		String		 |	 Type of Coffee(s), foreign key to Coffee										|
 |  Customer Name|		String		 |	 First and Last name of customer, foreign key to Customers	|
 |	 Order Status |	  String		 |	 pending, shipped, voided																		|
@@ -43,7 +38,7 @@ Build an API that allows authorized users to maintain coffee inventory, coffee a
 **Customers**
 
 |	 Columns			  	 |		DataType	 |	 Description											|
-|____________________|_______________|____________________________________|
+|--------------------|---------------|------------------------------------|
 |	 Customer Name  	 |   String		   |	 Company Name or Individual Name	|
 |  Phone Number   	 |	  Integer		 |	 Contact number for Customer			|
 |	 Email				  	 |	  String		 |	 Email for Customer								|
