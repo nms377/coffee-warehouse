@@ -15,14 +15,14 @@ Build an API that allows authorized users to maintain coffee inventory, coffee a
 
 **Coffee**
 
-|	 Columns  	   |		DataType	  |	 Description	 																	  			|
-|----------------|:--------------:|--------------------------------------------------------:|
-|	 Coffee Name   |		String		  |	 Type of Coffee (i.e. black, latte, cappucino)		 			|
-|	 Item Cost	   |		Integer		  |	 Wholesale cost for coffee													    |
-|  Shipping Cost |	  Integer		  |	 Shipping cost for each item														|
-|	 Location 	   |		String		  |	 Location Where Coffee is Grown/Manufactured		  			|
-|	 Caffeine Lvl  |	  Integer		  |	 Caffiene level of coffee																|
-|  Inventory 	   |    Integer	    |	 How much of this Coffee is in Stock at Location				|
+|	 Columns  	   |		DataType	  |	 Description	 																	  	  |
+|----------------|:--------------:|------------------------------------------------------:|
+|	 Coffee Name   |    String		  |Type of Coffee (i.e. black, latte, cappucino)		 			|
+|	 Item Cost     |    Integer		  |Wholesale cost for coffee													    |
+|  Shipping Cost |    Integer		  |Shipping cost for each item														|
+|	 Location      |    String		  |Location Where Coffee is Grown/Manufactured		  			|
+|	 Caffeine Lvl  |    Integer		  |Caffiene level of coffee																|
+|  Inventory     |    Integer	    |How much of this Coffee is in Stock at Location				|
 
 **Orders**
 
