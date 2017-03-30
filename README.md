@@ -8,6 +8,8 @@ Build an API that allows authorized users to maintain coffee inventory, coffee a
 ### The Specs
 ---
 
+#### Tables
+
 **Coffee**
 
 |	 Columns  	   |	DataType  |	Description	 																	  	    |
@@ -45,6 +47,14 @@ Build an API that allows authorized users to maintain coffee inventory, coffee a
 |	 Billing Address	 |		String		 |	 Billing address of Customer			|
 |	 Shipping Address	 |		String		 |	 Shipping address of Customer			|
 |	 Orders					   |   						 |	 Orders associated with Customer	|
+
+**Routes overview table:**
+
+|	METHOD | 			|												 |				 								 |
+| ROUTE  |			|												 |				 							   |
+| (uri)  | Body | Responses 						 | Action 								 |
+|--------|------|------------------------|-------------------------|
+| GET/   | empty| render HTML index.html | serves the `index.html` |
 
 
 
