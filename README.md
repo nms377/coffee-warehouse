@@ -50,11 +50,9 @@ Build an API that allows authorized users to maintain coffee inventory, coffee a
 
 **Routes overview table:**
 
-|	METHOD | 			|												 |				 								 |
-| ROUTE  |			|												 |				 							   |
-| (uri)  | Body | Responses 						 | Action 								 |
-|--------|------|------------------------|-------------------------|
-| GET/   | empty| render HTML index.html | serves the `index.html` |
+|	METHOD ROUTE (uri)  | Body | Responses 						 		| Action 								  |
+|---------------------|------|--------------------------|-------------------------|
+| GET/   							| empty| render HTML `index.html` | serves the `index.html` |	
 
 
 
