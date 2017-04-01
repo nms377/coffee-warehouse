@@ -59,18 +59,18 @@ Build an API that allows authorized users to maintain coffee inventory, coffee a
 | `POST /new`| { "email": string, "password":string, "security_question": string } | redirect to login | Creates a new admin user and redirects user to login page  |
 | `GET /order` | empty | Render order form | Creates a coffee order form |
 | `POST /order` | { "coffee_name": string, "quantity": integer, "first_name": string, "last_name": string, "company": string, "email": string, "phone": integer, "billing_address": string, "shipping_address": string, "subtotal": integer, "total": integer} | Redirect to confirmation page if order accepted | Creates a new order. Returns true if successful else false |
-| `GET /order/confirmation/:id` | { "coffee_name": string, "quantity": integer, "first_name": string, "last_name": string, "company": string, "email": string, "phone": integer, "billing_address": string, "shipping_address": string, "shipping_cost": integer, "subtotal": integer, "total": integer} | Render confirmation page | Retrieves the newly created order based on its order confirmation (id) and renders the information |
+| `GET /order/:id/confirmation` | { "coffee_name": string, "quantity": integer, "first_name": string, "last_name": string, "company": string, "email": string, "phone": integer, "billing_address": string, "shipping_address": string, "shipping_cost": integer, "subtotal": integer, "total": integer} | Render confirmation page | Retrieves the newly created order based on its order confirmation (id) and renders the information |
 | `GET /coffee` | {"coffee_name": string, "sale_price": integer, "shipping_cost": integer, "location": string, "caffeine_level": integer, "inventory": integer} | Renders page with list of all the coffee in database |
-| `GET /coffee:id` | { "coffee_name": string, "location": string, "caffeine_level": integer, "sale_price": integer, "shipping_cost": integer, "inventory": integer } | Returns JSON object coffee | Creates a list of coffee based on its id |
-| `GET /coffee:coffee_name`: | { "coffee_name": string, "location": string, "description": string, "caffeine_level": integer, "sale_price": integer, "shipping_cost": integer, "inventory": integer } | Returns JSON object coffee | Retrieves list of coffee based on `coffee_name`. |
+| `GET /coffee/:id` | { "coffee_name": string, "location": string, "caffeine_level": integer, "sale_price": integer, "shipping_cost": integer, "inventory": integer } | Returns JSON object coffee | Creates a list of coffee based on its id |
+| `GET /coffee/:coffee_name`: | { "coffee_name": string, "location": string, "description": string, "caffeine_level": integer, "sale_price": integer, "shipping_cost": integer, "inventory": integer } | Returns JSON object coffee | Retrieves list of coffee based on `coffee_name`. |
 | `POST /coffee` | { "coffee_name": string, "location": string, "description": string, "caffeine_level": integer, "sale_price": integer, "shipping_cost": integer, "inventory": integer } | Redirect to `/coffee` | Adds the new coffee item to the Object Coffee |
-| `PUT /coffee:id/edit` | { "coffee_name": string, "location": string, "description": string, "caffeine_level": integer, "sale_price": integer, "shipping_cost": integer, "inventory": integer } | {"success": true} | Updates coffee and the master list of coffee with the new coffee item if successful |
+| `PUT /coffee/:id/edit` | { "coffee_name": string, "location": string, "description": string, "caffeine_level": integer, "sale_price": integer, "shipping_cost": integer, "inventory": integer } | {"success": true} | Updates coffee and the master list of coffee with the new coffee item if successful |
 | `DELETE /coffee/:id` | { "id": integer } | {"success": true } | Removes the coffee item from the database |
 |`GET /order`| {"id": integer, "coffee_name": string, "quantity": integer, "first_name": string, "last_name": string, "company": string, "email": string, "phone": integer, "billing_address": string, "shipping_address": string, "subtotal": integer, "total": integer, "status": string } | Returns JSON object order | Retrieves list of all coffee orders in the database |
-| `GET /order:id` | { "id": integer, "coffee_name": string, "quantity": integer, "first_name": string, "last_name": string, "company": string, "email": string, "phone": integer, "billing_address": string, "shipping_address": string, "subtotal": integer, "total": integer, "status": string } | Returns JSON object orders by id | Returns a coffee order based on its id |
-| `GET /order:coffee_name` | { "id": integer, "coffee_name": string, "quantity": integer, "first_name": string, "last_name": string, "company": string, "email": string, "phone": integer, "billing_address": string, "shipping_address": string, "subtotal": integer, "total": integer, "status": string } | Return object orders | Returns a list of orders that include a specific `coffee_name` |
-| `PUT /order:id/edit` | {"status": string} | "success": true} | Updates the status of the order |
-| `GET /order:status` | { "id": integer, "coffee_name": string, "quantity": integer, "first_name": string, "last_name": string, "companay": string, "email": string, "phone": integer, "billing_address": string, "shipping_address": string, "subtotal": integer, "total": integer, "status": string } | Returns a JSON object order based on `status` | Retrieves a list of orderes based on the `status` of the order |
+| `GET /order/:id` | { "id": integer, "coffee_name": string, "quantity": integer, "first_name": string, "last_name": string, "company": string, "email": string, "phone": integer, "billing_address": string, "shipping_address": string, "subtotal": integer, "total": integer, "status": string } | Returns JSON object orders by id | Returns a coffee order based on its id |
+| `GET /order/:coffee_name` | { "id": integer, "coffee_name": string, "quantity": integer, "first_name": string, "last_name": string, "company": string, "email": string, "phone": integer, "billing_address": string, "shipping_address": string, "subtotal": integer, "total": integer, "status": string } | Return object orders | Returns a list of orders that include a specific `coffee_name` |
+| `PUT /order/:id/edit` | {"status": string} | "success": true} | Updates the status of the order |
+| `GET /order/:status` | { "id": integer, "coffee_name": string, "quantity": integer, "first_name": string, "last_name": string, "companay": string, "email": string, "phone": integer, "billing_address": string, "shipping_address": string, "subtotal": integer, "total": integer, "status": string } | Returns a JSON object order based on `status` | Retrieves a list of orderes based on the `status` of the order |
 
 
 
@@ -110,7 +110,7 @@ Once an account is created, the user will be redirected to the admin page to log
 
 If the order is accepted then the customer will be redirected to a new page with the message that their order was a success and generates an order number for the customer to use to track the status of their order.
 
-`GET /order/confirmation/:id`: Returns a JSJON response containing the information the customer submitted in the order form. Also displays the customer's order confirmation to track the status of their order."
+`GET /order/:id/confirmation`: Returns a JSJON response containing the information the customer submitted in the order form. Also displays the customer's order confirmation to track the status of their order."
 
 `GET /coffee`: Returns a JSON response listing all the coffees in the database with the following keys:
 
@@ -122,11 +122,11 @@ If the order is accepted then the customer will be redirected to a new page with
 * `shipping_cost`: shipping cost for each item
 * `inventory`: how much coffee is in stock
 
-`GET /coffee:id`: Returns a JSON response of a coffee based on its id.
+`GET /coffee/:id`: Returns a JSON response of a coffee based on its id.
 
-`GET /coffee:coffee_name`: Returns a JSON response of coffee based on its name.
+`GET /coffee/:coffee_name`: Returns a JSON response of coffee based on its name.
 
-`GET /coffee:location`: Returns a JSON response with a list of coffee based on its location.
+`GET /coffee/:location`: Returns a JSON response with a list of coffee based on its location.
 
 `GET /coffee/:caffeine_level`: Returns a JSON response with a list of coffee based on its caffeine level.
 
@@ -169,7 +169,7 @@ If the order is accepted then the customer will be redirected to a new page with
 * `total`: Total of order (includes shipping and sales tax)
 * `status`: Status of the coffee order (i.e. pending, shipped, voided)
 
-`GET /order:id`: This route should be made public for customers to view. Returns a JSON response with the following:
+`GET /order/:id`: This route should be made public for customers to view. Returns a JSON response with the following:
 
 * `id`: Coffee order number
 *  `coffee_name` : name of coffee(s) ordering
@@ -184,8 +184,8 @@ If the order is accepted then the customer will be redirected to a new page with
 * `total`: Total of order (includes shipping and sales tax)
 * `status`: Status of the coffee order (i.e. pending, shipped, voided)
 
-`GET /order:coffee_name`: Authenticates the user then returns a JSON response listing all orders that ordered the same coffee.
+`GET /order/:coffee_name`: Authenticates the user then returns a JSON response listing all orders that ordered the same coffee.
 
-`PUT /order:id/edit`: Authenticates the user then updates an order based on its id. User can also tag an order's status as pending, shipped, or voided."
+`PUT /order/:id/edit`: Authenticates the user then updates an order based on its id. User can also tag an order's status as pending, shipped, or voided."
 
-`GET /order:status`: Authenticates the user then returns a JSON response with a list of all the orders based on its status
+`GET /order/:status`: Authenticates the user then returns a JSON response with a list of all the orders based on its status
