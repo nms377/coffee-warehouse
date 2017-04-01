@@ -33,6 +33,8 @@ Build an API that allows authorized users to maintain coffee inventory, coffee a
 | status | String | Pending, Shipped, Voided
 | sale_price	| Integer | Cost per coffee item, foreign key to table Coffee	|
 | quantity |	Integer |	 Amount of coffee purchased
+| billing_address | String | Customer billing address, foreign key to table Customers |
+| shipping_address | String | Customer shipping address, foreign key to table Customers |
 | shipping_cost | Integer | Cost of shipping, foreign key to table Coffee
 | subtotal |	Integer | Total of items in order excluding shipping and sales tax
 | total | Integer | Total of order including shipping and sales tax	|
