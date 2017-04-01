@@ -14,39 +14,39 @@ Build an API that allows authorized users to maintain coffee inventory, coffee a
 
 |	 Columns  	   |	DataType  |	Description	 																	  	    |
 |----------------|------------|-------------------------------------------------------|
-|	 Coffee Name   |  String		| Type of Coffee (i.e. black, latte, cappucino)		 			|
-|	 Item Cost     |  Integer		| Wholesale cost for coffee													    |
-|  Shipping Cost |  Integer		| Shipping cost for each item														|
-|	 Location      |  String		| Location Where Coffee is Grown/Manufactured		  			|
-|	 Caffeine Lvl  |  Integer		| Caffiene level of coffee															|
-|  Inventory     |  Integer	  | How much of this Coffee is in Stock at Location				|
+|	coffee_name   |  String		| Name of coffee		 			|
+|	 sale_cost     |  Integer		| Wholesale cost for coffee													    |
+| sale_price | Integer | Retail cost
+|  shipping_cost |  Integer		| Shipping cost for each item														|
+|	 location      |  String		| Location Where Coffee is grown/manufactured		  			|
+|	 caffeine  |  Integer		| Caffiene level of coffee															|
+|  inventory     |  Integer	  | How much of this Coffee is in stock		|
 
 **Orders**
 
 |  Columns			|		DataType	 |	 Description																								|
 |---------------|--------------|--------------------------------------------------------------|
-|	 Coffee Name	|		String		 |	 Type of Coffee(s), foreign key to Coffee										|
-|  Customer Name|		String		 |	 First and Last name of customer, foreign key to Customers	|
-|	 Order Status |	  String		 |	 pending, shipped, voided																		|
-|	 Item Cost		|	  Integer		 |	 Cost per coffee item, foreign key to Coffee								|
-|	 Quantity	    |		Integer		 |	 How much of each coffee item is purchased									|
-|	 Ship Method	|	  String		 |	 Method of shipping (i.e. FedEx, UPS, Freight, USPS)				|
-|	 Shipping Cost|	  Integer	   |	 Cost of shipping based on ship method and order weight			|
-|	 Sub Total	  |	  Integer	   |	 Total of Items in Order not including shipping cost				|
-|	 Order Total	|	  Integer	   |	 Total of Order include shipping cost												|
-|  Ship Date	  |		Date		   |	 Date order was shipped from warehouse											|
-|	 Tracking No. |	  String	   |	 Tracking number of shipped order														|
+|	 coffee_name	|		String		 |	 Name of coffee(s), foreign key to table Coffee										|
+|  customer_name|		String		 |	 First and Last name of customer, foreign key to table Customer	|
+|	 order_status |	  String		 |	 Pending, Shipped, Voided																		|
+|	 sale_price		|	  Integer		 |	 Cost per coffee item, foreign key to Coffee								|
+|	 quantity	    |		Integer		 |	 Amount of coffee purchased	|
+|	 shipping_cost|	  Integer	   |	 Cost of shipping, foreign key to table Coffee |
+|	 sub_total	  |	  Integer	   |	 Total of items in order excluding shipping and sales tax				|
+|	 ordert_total	|	  Integer	   |	 Total of order including shipping and sales tax											|
+|  ship_date	  |		Date		   |	 Date order was shipped from warehouse											|
+|	 status |	  String	   |	 Tracking number of shipped order														|
 
 **Customers**
 
 |	 Columns			  	 |		DataType	 |	 Description											|
 |--------------------|---------------|------------------------------------|
-|	 Customer Name  	 |   String		   |	 Company or Individual Name	|
-|  Phone Number   	 |	  Integer		 |	 Contact number for Customer			|
-|	 Email				  	 |	  String		 |	 Email for Customer								|
-|	 Billing Address	 |		String		 |	 Billing address of Customer			|
-|	 Shipping Address	 |		String		 |	 Shipping address of Customer			|
-|	 Orders					   |   						 |	 Orders associated with Customer	|
+|	 customer_name  	 |   String		   |	 Company or Individual Name	|
+|  phone   	 |	  Integer		 |	 Contact number for Customer			|
+|	 email				  	 |	  String		 |	 Email for Customer								|
+|	 billing_address	 |		String		 |	 Billing address of Customer			|
+|	 shipping_address	 |		String		 |	 Shipping address of Customer			|
+|	 orders					   |   						 |	 Orders associated with Customer, foreign key to table Orders	|
 
 **Routes overview table:**
 
@@ -82,16 +82,15 @@ Once an account is created, the user will be redirected to the admin page to log
 
 `POST /order`: Creates an order object conatining the following:
 
-* `Coffee Name` : name of coffee(s) ordering
-* `Quantity`: Number of coffee items purchased
-* `Customer Name`: Name of the customer
-* `E-mail`: to send order confirmation
-* `Phone`: to contact guest
-* `Billing Address`: Billing address of the cusotmer
-* `Shipping Address`: Shipping address if differnt from billing
-* `Shipping Method`: shipping service and speed guest would like their item shipped
-* `Subtotal`: total of order (not including shipping or sales tax)
-* `Total`: Total of order (includes shipping and sales tax)
+* `coffee_name` : name of coffee(s) ordering
+* `quantity`: Number of coffee items purchased
+* `customer_name`: Name of the customer
+* `email`: to send order confirmation
+* `phone`: to contact guest
+* `billing_address`: Billing address of the cusotmer
+* `shipping_address`: Shipping address if differnt from billing
+* `subtotal`: total of order (not including shipping or sales tax)
+* `total`: Total of order (includes shipping and sales tax)
 
 If the order is accepted then the customer will be redirected to a new page with the message that their order was a success and generates an order number for the customer to use to track the status of their order.
 
@@ -99,60 +98,41 @@ If the order is accepted then the customer will be redirected to a new page with
 
 `GET /coffee`: Returns a JSON response listing all the coffees in the database with the following keys:
 
-* `Coffee Name`: name of coffee
-* `Location`: where coffee beans were grown or where coffee was manufactured
-* `Description`: description of the cofee
-* `Caffeine Level`: caffeine level of the coffee
-* `Item Cost`: cost of item
-* `Shipping Cost`: shipping cost for each item
+* `coffee_name`: name of coffee
+* `location`: where coffee beans were grown or where coffee was manufactured
+* `description`: description of the cofee
+* `caffeine_level`: caffeine level of the coffee
+* `sale_price`: cost of item
+* `shipping_cost`: shipping cost for each item
+* `inventory`: how much coffee is in stock
 
-`GET /coffee:id`: Returns a JSON response of a coffee based on its id and returns the following keys:
+`GET /coffee:id`: Returns a JSON response of a coffee based on its id.
 
-* `Coffee Name`: name of coffee
-* `Location`: where coffee beans were grown or where coffee was manufactured
-* `Description`: description of the cofee
-* `Caffeine Level`: caffeine level of the coffee
-* `Item Cost`: cost of item
-* `Shipping Cost`: shipping cost for each item
+`GET /coffee:coffee_name`: Returns a JSON response of coffee based on its name.
 
-`GET /coffee:coffeename`: Returns a JSON response of coffee based on its name and returns the following keys:
+`GET /coffee:location`: Returns a JSON response with a list of coffee based on its location.
 
+`GET /coffee/:caffeine_level`: Returns a JSON response with a list of coffee based on its caffeine level.
 
-* `Coffee Name`: name of coffee
-* `Location`: where coffee beans were grown or where coffee was manufactured
-* `Description`: description of the cofee
-* `Caffeine Level`: caffeine level of the coffee
-* `Item Cost`: cost of item
-* `Shipping Cost`: shipping cost for each item
+`GET /coffee/new`: Authenticates the user then renders a form to add new coffees to the database.
 
-`GET /coffee:location`: Returns a JSON response with a list of coffee based on its location and returns the following keys:
-
-* `Coffee Name`: name of coffee
-* `Location`: where coffee beans were grown or where coffee was manufactured
-* `Description`: description of the cofee
-* `Caffeine Level`: caffeine level of the coffee
-* `Item Cost`: cost of item
-* `Shipping Cost`: shipping cost for each item
-
-`GET /coffee/:caffeinelevel`: Returns a JSON response with a list of coffee based on its caffeine level
-
-* `Coffee Name`: name of coffee
-* `Location`: where coffee beans were grown or where coffee was manufactured
-* `Description`: description of the cofee
-* `Caffeine Level`: caffeine level of the coffee
-* `Item Cost`: cost of item
-* `Shipping Cost`: shipping cost for each item
-
-`GET /coffee/new`: Authenticates the user then renders a form for admin users to add new coffees to the database. 
+* `coffee_name`: name of coffee
+* `location`: where coffee beans were grown or where coffee was manufactured
+* `description`: description of the cofee
+* `caffeine_level`: caffeine level of the coffee
+* `sale_price`: cost of item
+* `shipping_cost`: shipping cost for each item
+* `inventory`: how much coffee is in stock
 
 `POST /coffee`: Authenticates the user then creates an new coffee object containing the following:
 
-* `Coffee Name`: name of coffee
-* `Location`: where coffee beans were grown or where coffee was manufactured
-* `Description`: description of the cofee
-* `Caffeine Level`: caffeine level of the coffee
-* `Item Cost`: cost of item
-* `Shipping Cost`: shipping cost for each item
+* `coffee_name`: name of coffee
+* `location`: where coffee beans were grown or where coffee was manufactured
+* `description`: description of the cofee
+* `caffeine_level`: caffeine level of the coffee
+* `sale_price`: cost of item
+* `shipping_cost`: shipping cost for each item
+* `inventory`: how much coffee is in stock
 
 `PUT /coffee/:id/edit`: Authenticates the user and updates a coffee item based on its id.
 
@@ -161,34 +141,31 @@ If the order is accepted then the customer will be redirected to a new page with
 `GET /order`: Authenticates the user and renders a list of orders in the databse with the following:
 
 * `id`: Coffee order number
-*  `Coffee Name` : name of coffee(s) ordering
-* `Quantity`: Number of coffee items purchased
-* `Customer Name`: Name of the customer
-* `E-mail`: to send order confirmation
-* `Phone`: to contact guest
-* `Billing Address`: Billing address of the cusotmer
-* `Shipping Address`: Shipping address if differnt from billing
-* `Shipping Method`: shipping service and speed guest would like their item shipped
-* `Subtotal`: total of order (not including shipping or sales tax)
-* `Total`: Total of order (includes shipping and sales tax)
-* `Status`: Status of the coffee order (i.e. pending, shipped/delivered
-* `Tracking No.`: Tracking number of order once it is shipped
+*  `coffee_name` : name of coffee(s) ordering
+* `quantity`: Number of coffee items purchased
+* `customer_name`: Name of the customer
+* `email`: to send order confirmation
+* `phone`: to contact guest
+* `billing_address`: Billing address of the cusotmer
+* `shipping_address`: Shipping address if differnt from billing
+* `subtotal`: total of order (not including shipping or sales tax)
+* `total`: Total of order (includes shipping and sales tax)
+* `status`: Status of the coffee order (i.e. pending, shipped, voided)
 
 `GET /order:id`: This route should be made public for customers to view. Returns a JSON response with the following:
 
 * `id`: Coffee order number
-*  `Coffee Name` : name of coffee(s) ordering
-* `Quantity`: Number of coffee items purchased
-* `Customer Name`: Name of the customer
-* `E-mail`: to send order confirmation
-* `Phone`: to contact guest
-* `Billing Address`: Billing address of the cusotmer
-* `Shipping Address`: Shipping address if differnt from billing
-* `Shipping Method`: shipping service and speed guest would like their item shipped
-* `Subtotal`: total of order (not including shipping or sales tax)
-* `Total`: Total of order (includes shipping and sales tax)
-* `Status`: Status of the coffee order (i.e. pending, shipped/delivered
-* `Tracking No.`: Tracking number of order once it is shipped
+*  `coffee_name` : name of coffee(s) ordering
+* `quantity`: Number of coffee items purchased
+* `customer_name`: Name of the customer
+* `email`: to send order confirmation
+* `phone`: to contact guest
+* `billing_address`: Billing address of the cusotmer
+* `shipping_address`: Shipping address if differnt from billing
+* `shipping_method`: shipping service and speed guest would like their item shipped
+* `subtotal`: total of order (not including shipping or sales tax)
+* `total`: Total of order (includes shipping and sales tax)
+* `status`: Status of the coffee order (i.e. pending, shipped, voided)
 
 `GET /order:coffeename`: Authenticates the user then returns a JSON response listing all orders that ordered the same coffee.
 
