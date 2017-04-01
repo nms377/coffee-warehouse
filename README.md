@@ -3,7 +3,7 @@
 **About the API**
 ---
 
-Build an API that allows authorized users to maintain coffee inventory, coffee and admin information, and customer drink orders. Create the server using **ExpressJS** and **Sequelize** as the ORM for the **Postgresql** Datastore. Use **React** to build the front-end User-Interface.
+Build an API that allows authorized users to maintain coffee inventory, coffee and admin information, and allows customers to place orders. Create the server using **ExpressJS** and **Sequelize** as the ORM for the **Postgresql** Datastore. Use **React** to build the front-end User-Interface.
 
 ### The Specs
 ---
@@ -15,50 +15,53 @@ Build an API that allows authorized users to maintain coffee inventory, coffee a
 |	 Columns  	   |	DataType  |	Description	 																	  	    |
 |----------------|------------|-------------------------------------------------------|
 |	coffee_name   |  String		| Name of coffee		 			|
-|	 sale_cost     |  Integer		| Wholesale cost for coffee													    |
+|	 sale_cost     |  Integer		| Wholesale cost from manufacture   |
 | sale_price | Integer | Retail cost
 |  shipping_cost |  Integer		| Shipping cost for each item														|
-|	 location      |  String		| Location Where Coffee is grown/manufactured		  			|
-|	 caffeine  |  Integer		| Caffiene level of coffee															|
-|  inventory     |  Integer	  | How much of this Coffee is in stock		|
+|	 location      |  String		| Where coffee is grown/manufactured		  			|
+|	 caffeine_level  |  Integer		| Caffiene level of coffee															|
+|  inventory     |  Integer	  | Amount of coffee in stock		|
 
 **Orders**
 
-|  Columns			|		DataType	 |	 Description																								|
+| Columns | DataType | Description |
 |---------------|--------------|--------------------------------------------------------------|
-|	 coffee_name	|		String		 |	 Name of coffee(s), foreign key to table Coffee										|
-|  customer_name|		String		 |	 First and Last name of customer, foreign key to table Customer	|
-|	 order_status |	  String		 |	 Pending, Shipped, Voided																		|
-|	 sale_price		|	  Integer		 |	 Cost per coffee item, foreign key to Coffee								|
-|	 quantity	    |		Integer		 |	 Amount of coffee purchased	|
-|	 shipping_cost|	  Integer	   |	 Cost of shipping, foreign key to table Coffee |
-|	 sub_total	  |	  Integer	   |	 Total of items in order excluding shipping and sales tax				|
-|	 ordert_total	|	  Integer	   |	 Total of order including shipping and sales tax											|
-|  ship_date	  |		Date		   |	 Date order was shipped from warehouse											|
-|	 status |	  String	   |	 Tracking number of shipped order														|
+| coffee_name	| String | Name of coffee(s), foreign key to table Coffee |
+| first_name | String |	 First name of customer, foreign key to table Customer
+| last_name | String | Last name of customer, foreign key to table Customer |
+| company | String | Name of company if applicable, foreign key to table Customer |
+| status | String | Pending, Shipped, Voided
+| sale_price	| Integer | Cost per coffee item, foreign key to table Coffee	|
+| quantity |	Integer |	 Amount of coffee purchased
+| shipping_cost | Integer | Cost of shipping, foreign key to table Coffee
+| subtotal |	Integer | Total of items in order excluding shipping and sales tax
+| total | Integer | Total of order including shipping and sales tax	|
 
 **Customers**
 
-|	 Columns			  	 |		DataType	 |	 Description											|
+| Columns | DataType | Description |
 |--------------------|---------------|------------------------------------|
-|	 customer_name  	 |   String		   |	 Company or Individual Name	|
-|  phone   	 |	  Integer		 |	 Contact number for Customer			|
-|	 email				  	 |	  String		 |	 Email for Customer								|
-|	 billing_address	 |		String		 |	 Billing address of Customer			|
-|	 shipping_address	 |		String		 |	 Shipping address of Customer			|
-|	 orders					   |   						 |	 Orders associated with Customer, foreign key to table Orders	|
+| first_name  | String | First name |
+| last_name | String | Last name |
+| company | String | Company name if applicable |
+| phone  | Integer | Contact number for Customer|
+| email |	String | Email for Customer |
+| billing_address |	String | Billing address of Customer | shipping_address | String	|	 Shipping address of Customer |
+| orders | Orders associated with Customer, foreign key to table Orders	|
 
 **Routes overview table:**
 
-|	METHOD ROUTE (uri)  | Body | Responses 						 		| Action 								  |
+| METHOD ROUTE (uri) | Body | Responses | Action |
 |---------------------|------|--------------------------|-------------------------|
-| `GET /` 						| empty| render HTML `index.html` | serves the `index.html` |
-| `GET /admin` | empty | renders admin page | |
-| `POST /admin` | { "email": string, "password":string } | redirect to admin profile | Authenticate login and redirect to admin profile |
-| `POST /newuser`| { "email": string, "password":string, "securityQuestion": string } | redirect to login | Creates a new admin user and redirects user to login page |
+| `GET /` | empty| render HTML `index.html` | serves the `index.html`
+| `GET /admin` | empty | renders admin page
+| `POST /admin` | { "email": string, "password":string } | redirect to admin profile | Authenticate login and redirect to admin profile
+| `POST /new`| { "email": string, "password":string, "security_question": string } | redirect to login | Creates a new admin user and redirects user to login page 
 | `GET /order` | empty | Render order form | Creates a coffee order form |
-| `POST /order` | { "coffeeName": string, "quantity": integer, "firstName": string, "lastName": string, "email": string, "phone": integer, "billingAddress": string, "shippingAddress": string, "shipMethod": string, "shipCost": integer, "subtotal": integer, "total": integer} | Redirect to confirmation page if order accepted | Creates a new order. Returns true if successful else false |
-| `GET /order/confirmation/:id` | { "coffeeName": string, "quantity": integer, "firstName": string, "lastName": string, "email": string, "phone": integer, "billingAddress": string, "shippingAddress": string, "shipMethod": string, "shipCost": integer, "subtotal": integer, "total": integer} | Render confirmation page | Retrieves the newly created order based on its order confirmation (id) and renders the information |
+| `POST /order` | { "coffee_name": string, "quantity": integer, "first_name": string, "last_name": string, "email": string, "phone": integer, "billing_address": string, "shipping_address": string, "subtotal": integer, "total": integer} | Redirect to confirmation page if order accepted | Creates a new order. Returns true if successful else false |
+| `GET /order/confirmation/:id` | { "coffee_name": string, "quantity": integer, "first_name": string, "last_name": string, "email": string, "phone": integer, "billing_address": string, "shipping_address": string, "shipping_cost": integer, "subtotal": integer, "total": integer} | Render confirmation page | Retrieves the newly created order based on its order confirmation (id) and renders the information |
+| `GET /coffee` | {" | Renders page with list of all the coffee in database | |
+
 
 
 
